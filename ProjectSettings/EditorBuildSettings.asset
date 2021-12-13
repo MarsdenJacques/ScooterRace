@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 418a79b55413bf3439fcf0c7ca8b6a5e
   - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
+    path: Assets/Scenes/Road.unity
     guid: 7118604d1e2fc8549aa7e232f7b0ad02
+  - enabled: 1
+    path: Assets/Scenes/Town.unity
+    guid: 0d04d39acfd3b2844b9f3bc131106f2a
+  - enabled: 1
+    path: Assets/Scenes/Building.unity
+    guid: 78f929f5d5cc4af4b8982e7bfe06ee16
   m_configObjects: {}

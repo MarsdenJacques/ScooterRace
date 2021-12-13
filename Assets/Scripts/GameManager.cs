@@ -5,10 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private float speed = 1.0f;
     public static GameManager manager;
-    public LoadingInterface loader;
+    public LayerController layerController;
+    public SpriteVault spriteVault;
+    private LoadingInterface loader;
+    private RaceRunner raceRunner;
+    private List<Player> players = new List<Player>();
     // Start is called before the first frame update
     void Awake()
     {
@@ -21,9 +23,42 @@ public class GameManager : MonoBehaviour
             manager = this;
         }
         DontDestroyOnLoad(gameObject);
-        loader.LoadScene(1, StartMainMenu);
     }
-
+    public bool RegisterLoader(LoadingInterface candidateLoader)
+    {
+        if (loader != null && loader != candidateLoader)
+        {
+            return false;
+        }
+        else
+        {
+            loader = candidateLoader;
+            loader.LoadScene(1, StartMainMenu);
+            return true;
+        }
+    }
+    public bool RegisterRaceRunner(RaceRunner candidateRunner)
+    {
+        if (raceRunner != null && raceRunner != candidateRunner)
+        {
+            return false;
+        }
+        else
+        {
+            raceRunner = candidateRunner;
+            StartRace();
+            return true;
+        }
+    }
+    public bool RegisterPlayer(Player player)
+    {
+        if(players.Contains(player))
+        {
+            return false;
+        }
+        players.Add(player);
+        return true;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -33,12 +68,28 @@ public class GameManager : MonoBehaviour
     {
 
     }
-    private void StartGameplay()
+    public void LoadRace()
     {
-
+        loader.LoadScene(2);
     }
-    public float GetSpeed()
+    private void StartRace()
     {
-        return speed;
+        raceRunner.SetRaceDistance(10.0f);
+        foreach(Player player in players)
+        {
+            player.StartRace();
+        }
+        raceRunner.StartRace();
+    }
+    public void LoadTown()
+    {
+        loader.LoadScene(3, StartTown);
+    }
+    private void StartTown()
+    {
+        foreach (Player player in players)
+        {
+            player.StartTown();
+        }
     }
 }
