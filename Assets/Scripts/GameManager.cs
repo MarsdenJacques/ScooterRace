@@ -8,6 +8,10 @@ public class GameManager : MonoBehaviour
     public static GameManager manager;
     public LayerController layerController;
     public SpriteVault spriteVault;
+    [SerializeField]
+    private float speed = 1.0f;
+    [SerializeField]
+    private float roadHeight = 1.0f;
     private LoadingInterface loader;
     private RaceRunner raceRunner;
     private List<Player> players = new List<Player>();
@@ -59,6 +63,21 @@ public class GameManager : MonoBehaviour
         players.Add(player);
         return true;
     }
+    public void SetMovement(bool newMove)
+    {
+        foreach(Player player in players)
+        {
+            player.SetMovement(newMove);
+        }
+    }
+    public float GetMoveSpeed()
+    {
+        return speed;
+    }
+    public float GetPlayerBoosting()
+    {
+        return players[0].GetBoosting();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -74,7 +93,7 @@ public class GameManager : MonoBehaviour
     }
     private void StartRace()
     {
-        raceRunner.SetRaceDistance(10.0f);
+        raceRunner.SetRaceDistance(100.0f);
         foreach(Player player in players)
         {
             player.StartRace();
@@ -91,5 +110,9 @@ public class GameManager : MonoBehaviour
         {
             player.StartTown();
         }
+    }
+    public float GetRoadHeight()
+    {
+        return roadHeight;
     }
 }

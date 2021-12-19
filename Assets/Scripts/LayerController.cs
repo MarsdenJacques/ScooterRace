@@ -21,6 +21,7 @@ public class LayerController : MonoBehaviour
         else
         {
             GameManager.manager.layerController = this;
+            moveSpeed = GameManager.manager.GetMoveSpeed();
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -30,7 +31,6 @@ public class LayerController : MonoBehaviour
     {
         if(currentX != targetX)
         {
-            Debug.Log(currentX);
             MoveLayers();
         }
     }
@@ -41,15 +41,16 @@ public class LayerController : MonoBehaviour
     private void MoveLayers()
     {
         int direction = 1;
+        float boosting = GameManager.manager.GetPlayerBoosting();
         if(targetX < currentX)
         {
             direction = -1;
         }
         foreach (GameLayer layer in currentLayers)
         {
-            MoveLayer(layer, direction);
+            MoveLayer(layer, direction, boosting);
         }
-        currentX += moveSpeed * direction * Time.deltaTime;
+        currentX += moveSpeed * direction * boosting * Time.deltaTime;
         if(direction == 1)
         {
             if(currentX > targetX)
@@ -65,9 +66,9 @@ public class LayerController : MonoBehaviour
             }
         }
     }
-    private void MoveLayer(GameLayer layer, int direction)
+    private void MoveLayer(GameLayer layer, int direction, float boosting)
     {
-        layer.transform.position = new Vector3(layer.transform.position.x + moveSpeed * -direction / (layer.GetParallaxValue() * parallaxMultiplier) * Time.deltaTime, layer.transform.position.y, layer.transform.position.z);
+        layer.transform.position = new Vector3(layer.transform.position.x + moveSpeed * boosting * -direction * layer.GetParallaxValue() * parallaxMultiplier * Time.deltaTime, layer.transform.position.y, layer.transform.position.z);
     }
     public void RegisterLayer(GameLayer layer)
     {

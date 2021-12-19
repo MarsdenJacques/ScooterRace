@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad717a346120ae4eb075747cb006dd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxMultiplier: 1
+  parallaxMultiplier: 2
   moveSpeed: 1
 --- !u!4 &274177613
 Transform:
@@ -384,3 +384,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerController: {fileID: 0}
   spriteVault: {fileID: 0}
+  speed: 1
+  roadHeight: 1.5

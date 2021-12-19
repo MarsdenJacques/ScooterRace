@@ -41,11 +41,13 @@ public class RaceRunner : MonoBehaviour
     {
         raceProgress.value = 0;
         layerController.SetTarget(layerController.GetCurrentX() + raceDistance);
+        GameManager.manager.SetMovement(true);
         raceRunning = true;
     }
     public void PauseRace()
     {
         raceRunning = false;
+        GameManager.manager.SetMovement(false);
         raceDistance -= layerController.GetCurrentX();
         layerController.SetTarget(layerController.GetCurrentX());
     }
